@@ -117,8 +117,10 @@ class GeoText(object):
         if country is not None:
             self.cities = [city for city in self.cities if self.index.cities[city.lower()] == country]
 
-        self.nationalities = [each for each in candidates
-                              if each.lower() in self.index.nationalities]
+        #self.nationalities = [each for each in candidates
+        #                      if each.lower() in self.index.nationalities]
+
+        self.nationalities = self.check_nationalities(candidates)
 
         # Calculate number of country mentions
         self.country_mentions = [self.index.countries[country.lower()]
@@ -130,5 +132,15 @@ class GeoText(object):
         self.country_mentions = OrderedDict(
             Counter(self.country_mentions).most_common())
 
+    def check_nationalities(self, candidates):
+        results = []
+        for word in candidates:
+            if word[:-1].lower() in self.index.nationalities:
+                results.append(word[:-1])
+            elif word.lower() in self.index.nationalities:
+                results.append(word)
+
+        return results
+
 if __name__ == '__main__':
-    print(GeoText('In a filing with the Hong Kong bourse, the Chinese cement producer said ...').countries)
+    print(GeoText('Singaporeans love food').country_mentions)
