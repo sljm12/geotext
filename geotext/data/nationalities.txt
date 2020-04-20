@@ -106,6 +106,7 @@ luxembourger:LU
 macedonian:MK
 malawian:MW
 malaysian:MY
+malaysian:MY
 maldivian:MV
 malian:ML
 maltese:MT
